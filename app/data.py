@@ -7,7 +7,14 @@ from pandas import DataFrame
 from pymongo import MongoClient
 
 
-class Database:
+class MonsterDatabase:
+
+    def __init__(self):
+        load_dotenv()
+        db_url = getenv("DB_URL")
+        self.client = MongoClient(db_url)
+        self.db = self.client["database_of_monsters"]
+        self.collection = self.db["my_monsters"]
 
     def seed(self, amount):
         pass
