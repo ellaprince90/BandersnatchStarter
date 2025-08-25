@@ -1,5 +1,6 @@
 from os import getenv
 
+import pandas as pd
 from certifi import where
 from dotenv import load_dotenv
 from MonsterLab import Monster
@@ -16,17 +17,50 @@ class MonsterDatabase:
         self.db = self.client["database_of_monsters"]
         self.collection = self.db["my_monsters"]
 
-    def seed(self, amount):
-        pass
+    def seed(self, amount: int) -> bool:
+        "Seed database with given number of monsters"
+        try:
+            monsters = []
+            for num in range(amount):
+                m = Monster()
+                if hasattr(m, "to_dict"):
+                    monsters.append(m.to_dict())
+                else:
+                    monsters.append(m.__dict__)
+            self.collection.insert_many(monsters)
+            return True
+        except Exception as e:
+            print(f"Error seeding database: {e}")
+            return False
 
     def reset(self):
-        pass
+        "Delete all monsters from the collection"
+        try:
+            self.collection.delete_many({})
+            return True
+        except Exception as e:
+            print(f"Error resetting database: {e}")
+            return False
 
     def count(self) -> int:
-        pass
+        "Return the number of monsters in the collection"
+        return self.collection.count_documents({})
 
     def dataframe(self) -> DataFrame:
-        pass
+        "Makes a dataframe of all monsters in th collection"
+        try:
+            documents_list = list(self.collection.find({}, {"_id":0}))
+            return pd.DataFrame(documents_list)
+        except Exception as e:
+            print(f"Error creating dataframe: {e}")
+            return DataFrame()
 
     def html_table(self) -> str:
-        pass
+        "Makes an HTML representation of the dataframe"
+        try:
+            df = self.dataframe()
+            if df.empty:
+                return f"No monsters found in database."
+            return df.to_html()
+        except Exception as e:
+            return(f"Error generating HTML table: {e}")
