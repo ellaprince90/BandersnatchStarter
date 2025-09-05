@@ -12,5 +12,19 @@ def chart(df: DataFrame, x: str, y: str, target: str) -> Chart:
         y=y,
         color=target,
         tooltip = Tooltip(df.columns.to_list())
+    ).configure_title(
+        font="Helvetica Neue",
+        fontSize=20,
+        color="black",
+        anchor="middle"
+    ).configure_axis(
+        grid=True,
+        gridColor="black",
+        labelFont="Helvetica Neue",
+        labelFontSize=10,
+        labelColor="black",
+        titleFont="Helvetica Neue",
+        titleFontSize=14,
+        titleColor="black"
     )
     return graph
