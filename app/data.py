@@ -37,7 +37,7 @@ class MonsterDatabase:
 
     def get_all_monsters(self):
         """Returns a list of all monsters in the database, excluding the _id column"""
-        return list(self.collection.find({}, {"_id":0}))
+        return self.collection.find({}, {"_id":0})
 
     def count(self) -> int:
         """Return the number of monsters in the collection"""
