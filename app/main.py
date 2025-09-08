@@ -10,7 +10,7 @@ from app.data import MonsterDatabase
 from app.graph import chart
 from app.machine import Machine
 
-SPRINT = 2
+SPRINT = 3
 APP = Flask(__name__)
 
 
