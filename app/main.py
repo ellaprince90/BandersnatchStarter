@@ -92,7 +92,8 @@ def model():
         energy=energy,
         sanity=sanity,
         prediction=prediction,
-        confidence=f"{confidence:.2%}",
+        # confidence=f"{confidence:.2%}"
+        confidence=None,
     )
 
 
